@@ -8,9 +8,9 @@ import java.sql.Statement;
 
 public class ConexionBD {
     public static Connection getConnection() throws SQLException {
-        final String USER = "empleadoBD";
-        final String PASS = "empleadoBD";
-        final String DB_NAME = "empleado_BD";
+        final String USER = "root";
+        final String PASS = "1234";
+        final String DB_NAME = "empleado_bd";
         final String CONN_URL = "jdbc:mariadb://localhost:3306/" + DB_NAME;
         Connection conn = null;
 

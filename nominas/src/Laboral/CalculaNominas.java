@@ -2,7 +2,8 @@ package Laboral;
 
 import java.util.List;
 
-import GestorFIcheros.GestorFicheroEmpleados;
+import GestorFicheros.GestorFicheroEmpleados;
+import MetodosBD.AltaEmpleado;
 
 public class CalculaNominas {
 
@@ -12,6 +13,10 @@ public class CalculaNominas {
      *             Esto es para generar un javadoc
      */
     public static void main(String[] args) {
+
+        AltaEmpleado altaBD = new AltaEmpleado();
+        altaBD.altaEmpleados();
+
         List<Empleado> listaEmpleado = new GestorFicheroEmpleados().leerFichero();
 
         Empleado e1 = listaEmpleado.get(0);

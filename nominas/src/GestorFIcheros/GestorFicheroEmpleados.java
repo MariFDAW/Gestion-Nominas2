@@ -1,4 +1,4 @@
-package GestorFIcheros;
+package GestorFicheros;
 
 import java.io.BufferedReader;
 
@@ -16,7 +16,7 @@ public class GestorFicheroEmpleados {
     public List<Empleado> leerFichero() {
 
         List<Empleado> listaEmpleados = new ArrayList<>();
-        String ruta = "C:\\Users\\Usuario\\Desktop\\Java\\Gestion-Nominas2\\Gestion-Nominas2\\nominas\\data\\empleados.txt";
+        String ruta = "data\\empleados.txt";
         String separador = ";";
         try (BufferedReader br = new BufferedReader(new FileReader(ruta))) {
             String linea = "";
@@ -46,7 +46,7 @@ public class GestorFicheroEmpleados {
     }
 
     public void escribeFichero(List<Empleado> listaEmpleado) {
-        String ruta = "C:\\Users\\Usuario\\Desktop\\Java\\Gestion-Nominas2\\Gestion-Nominas2\\nominas\\data\\salarios.dat";
+        String ruta = "data\\salarios.dat";
         try (DataOutputStream dt = new DataOutputStream(new FileOutputStream(ruta))) {
             for (int i = 0; i < listaEmpleado.size(); i++) {
                 Nomina n = new Nomina();
