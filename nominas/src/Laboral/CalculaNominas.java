@@ -1,7 +1,8 @@
 package Laboral;
 
-import java.io.File;
-import java.util.Scanner;
+import java.util.List;
+
+import GestorFIcheros.GestorFicheroEmpleados;
 
 public class CalculaNominas {
 
@@ -11,30 +12,15 @@ public class CalculaNominas {
      *             Esto es para generar un javadoc
      */
     public static void main(String[] args) {
-        File fichero = new File("empleados.txt");
-        Scanner s = null;
-        try {
-            /*
-             * Codigo del ejercicio anterior
-             * Empleado e1 = new Empleado("James Cosling", "32000032G", 'M', 4, 7);
-             * Empleado e2 = new Empleado("Ada LoveLace", "32000031R", 'F');
-             * escribe(e1, e2);
-             * e2.incrAnyo();
-             * e1.setCategoria(9);
-             * escribe(e1, e2);
-             */
+        List<Empleado> listaEmpleado = new GestorFicheroEmpleados().leerFichero();
 
-            s = new Scanner(fichero);
+        Empleado e1 = listaEmpleado.get(0);
+        Empleado e2 = listaEmpleado.get(1);
 
-            // Leemos linea a linea el fichero
-            while (s.hasNextLine()) {
-                String linea = s.nextLine(); // Guardamos la linea en un String
-                System.out.println(linea); // Imprimimos la linea
-            }
-        } catch (Exception e) {
-            System.out.println("Fichero no encontrado");
-        }
+        escribe(e1, e2);
 
+        GestorFicheroEmpleados gt = new GestorFicheroEmpleados();
+        gt.escribeFichero(listaEmpleado);
     }
 
     /**
