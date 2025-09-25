@@ -9,10 +9,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
+import java.util.Scanner;
 
-import GestorFicheros.GestorFicheroEmpleados;
+import GestorFIcheros.GestorFicheroEmpleados;
 import MetodosBD.AltaEmpleado;
 import MetodosBD.ConexionBD;
+import MetodosBD.MetodosBd;
 
 public class CalculaNominas {
 
@@ -22,6 +24,7 @@ public class CalculaNominas {
      *             Esto es para generar un javadoc
      */
     public static void main(String[] args) {
+        MetodosBd mbd = new MetodosBd();
 
         AltaEmpleado altaBD = new AltaEmpleado();
         altaBD.altaEmpleados();
@@ -35,6 +38,54 @@ public class CalculaNominas {
 
         GestorFicheroEmpleados gt = new GestorFicheroEmpleados();
         gt.escribeFichero(listaEmpleado);
+
+        int opcion;
+        Scanner sc = new Scanner(System.in);
+        do {
+
+            System.out.println("MENÚ");
+            System.out.println("0. SALIR");
+            System.out.println("1. Mostrar info de la BD");
+            System.out.println("2. Mostrar salario por dni de empleado");
+            System.out.println("3. MENU de modificación de datos de los empleados");
+            System.out.println("4. Recalcular y actualizar el sueldo de un empleado");
+            System.out.println("5. Recalcular y actualizar los sueldos de todos los empleados");
+            System.out.println("6. Copia de seguridad de la BD en fichero");
+
+            System.out.println("------------------------------------------------------------------");
+            System.out.println("Inserta un numero para elegir su opcion");
+            opcion = sc.nextInt();
+
+            switch (opcion) {
+                case 1:
+                    mbd.mostrarEmpleados();
+                    break;
+                case 2:
+                    Scanner scDni = new Scanner(System.in);
+                    System.out.println("Dime un dni");
+                    String dni = scDni.nextLine();
+                    mbd.mostrarSalarioEmpleado(dni);
+                    break;
+                case 3:
+                    mbd.actualizarEmpleados(e2);
+                    break;
+                case 4:
+                    mbd.actualizarSueldoUnEmpleado(e2);
+                    break;
+                case 5:
+                    mbd.actualizarSueldosTodosEmpleados();
+                    break;
+                case 6:
+                    mbd.copiaBDEnFichero();
+                    break;
+
+                default:
+                    System.out.println("La opcion debe estar entre 0 y 6");
+                    break;
+            }
+
+        } while (opcion != 0);
+
     }
 
     /**
@@ -54,93 +105,4 @@ public class CalculaNominas {
                 + " Categoria: " + e2.getCategoria() + " Años: " + e2.anyos + " Sueldo: " + n.sueldo(e2));
     }
 
-    private static void mostrarEmpleados(){
-        try (Connection conn = ConexionBD.getConnection();
-            Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery("SELECT * FROM empleados");) {
-            
-            while(rs.next()){
-                System.out.println("Nombre: "+rs.getString(1)+", DNI: "+rs.getString(2)+", Sexo: "+rs.getString(3)
-                +" ,Categoria: "+rs.getInt(4)+" ,Años: "+rs.getInt(5));
-            }
-
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    private static void mostrarUnSoloEmpleado(String dni){
-        try (Connection conn = ConexionBD.getConnection();
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM empleados where dni = ?");) {
-            
-            ps.setString(1, dni);   
-            ResultSet rs = ps.executeQuery();
-
-            while(rs.next()){
-                System.out.println("Nombre: "+rs.getString(1)+", DNI: "+rs.getString(2)+", Sexo: "+rs.getString(3)
-                +" ,Categoria: "+rs.getInt(4)+" ,Años: "+rs.getInt(5));
-            }
-
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    //Revisar
-    private static void actualizarEmpleados(Empleado emp){
-        String update = "UPDATE empleados SET Nombre = ?, SET DNI = ?, SET SEXO = ?,SET Categoria = ?,SET Años = ? WHERE DNI = ?";
-        try(Connection conn = ConexionBD.getConnection();
-            Statement st = conn.createStatement();
-            PreparedStatement ps = conn.prepareStatement(update)) {
-            
-            ps.setString(1, emp.nombre);
-            ps.setString(2, emp.dni);
-            ps.setString(3, String.valueOf(emp.sexo));
-            ps.setInt(4, emp.getCategoria());
-            ps.setInt(5, emp.anyos);
-
-            ps.executeUpdate();
-
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-
-        }
-    }
-
-    private static void actualizarSueldoUnEmpleado(Empleado emp){
-        String update = "UPDATE nominas SET sueldo = ? WHERE empleado = ?";
-        Nomina n = new Nomina();
-        try(Connection conn = ConexionBD.getConnection();
-            Statement st = conn.createStatement();
-            PreparedStatement ps = conn.prepareStatement(update)) {
-            
-            ps.setDouble(1, n.sueldo(emp));
-            ps.setString(2, emp.dni);
-
-            ps.executeUpdate();
-
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-
-        }
-    }
-
-    private static void actualizarSueldosTodosEmpleados(){
-        
-    }
-
-    private static void copiaBDEnFichero(){
-        String ruta = "data\\copiaBD";
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(ruta));
-             Connection conn = ConexionBD.getConnection();
-             Statement st = conn.createStatement();
-             ResultSet rs = st.executeQuery("SELECT * FROM empleados");) {
-            
-            
-
-        } catch (SQLException | IOException e) {
-            System.out.println(e.getMessage());
-        }
-    
-    }
 }

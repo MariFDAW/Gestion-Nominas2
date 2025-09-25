@@ -1,4 +1,4 @@
-package GestorFicheros;
+package GestorFIcheros;
 
 import java.io.BufferedReader;
 
