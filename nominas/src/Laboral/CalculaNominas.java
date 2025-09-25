@@ -1,19 +1,10 @@
 package Laboral;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.List;
 import java.util.Scanner;
 
 import GestorFIcheros.GestorFicheroEmpleados;
 import MetodosBD.AltaEmpleado;
-import MetodosBD.ConexionBD;
 import MetodosBD.MetodosBd;
 
 public class CalculaNominas {
@@ -85,7 +76,7 @@ public class CalculaNominas {
             }
 
         } while (opcion != 0);
-
+        sc.close();
     }
 
     /**

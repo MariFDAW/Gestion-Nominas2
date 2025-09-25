@@ -68,34 +68,51 @@ public class MetodosBd {
 
             switch (opcion) {
                 case 1:
-
+                    System.out.println("Dime el dni del empleado a actualizar");
+                    String dni = sc.nextLine();
+                    System.out.println("Dime el nombre nuevo del empleado a actualizar");
+                    String nombre = sc.nextLine();
+                    actualizaNombre(dni, nombre);
+                    break;
+                case 2:
+                    System.out.println("Dime el dni del empleado a actualizar");
+                    String dniAnt = sc.nextLine();
+                    System.out.println("Dime el dni nuevo del empleado a actualizar");
+                    String dniNuv = sc.nextLine();
+                    actualizaDni(dniAnt, dniNuv);
+                    break;
+                case 3:
+                    dni = "";
+                    System.out.println("Dime el dni del empleado a actualizar");
+                    dni = sc.nextLine();
+                    System.out.println("Dime el sexo nuevo del empleado a actualizar");
+                    String sexo = sc.nextLine();
+                    actualizaSexo(dni, sexo);
+                    break;
+                case 4:
+                    dni = "";
+                    Scanner scNum = new Scanner(System.in);
+                    System.out.println("Dime el dni del empleado a actualizar");
+                    dni = sc.nextLine();
+                    System.out.println("Dime la categoria nueva del empleado a actualizar");
+                    int categoria = scNum.nextInt();
+                    actualizaCategoria(dni, categoria);
+                    break;
+                case 5:
+                    dni = "";
+                    Scanner scNum2 = new Scanner(System.in);
+                    System.out.println("Dime el dni del empleado a actualizar");
+                    dni = sc.nextLine();
+                    System.out.println("Dime los años trabajados nuevos del empleado a actualizar");
+                    int anyos = scNum2.nextInt();
+                    actualizaAnyos(dni, anyos);
                     break;
 
                 default:
                     break;
             }
         } while (opcion != 0);
-        /*
-         * String update =
-         * "UPDATE empleados SET Nombre = ?, SET DNI = ?, SET SEXO = ?,SET Categoria = ?,SET Años = ? WHERE DNI = ?"
-         * ;
-         * try (Connection conn = ConexionBD.getConnection();
-         * Statement st = conn.createStatement();
-         * PreparedStatement ps = conn.prepareStatement(update)) {
-         * 
-         * ps.setString(1, emp.nombre);
-         * ps.setString(2, emp.dni);
-         * ps.setString(3, String.valueOf(emp.sexo));
-         * ps.setInt(4, emp.getCategoria());
-         * ps.setInt(5, emp.anyos);
-         * 
-         * ps.executeUpdate();
-         * 
-         * } catch (SQLException e) {
-         * System.out.println(e.getMessage());
-         * 
-         * }
-         */
+        sc.close();
     }
 
     public void actualizarSueldoUnEmpleado(Empleado emp) {
@@ -131,5 +148,82 @@ public class MetodosBd {
             System.out.println(e.getMessage());
         }
 
+    }
+
+    public void actualizaNombre(String dni, String nombre){     
+        String update ="UPDATE empleados SET Nombre = ? WHERE DNI = ?";
+        try (Connection conn = ConexionBD.getConnection();
+        Statement st = conn.createStatement();
+        PreparedStatement ps = conn.prepareStatement(update)) {
+
+        ps.setString(1, nombre);
+        ps.setString(2, dni);
+         
+        ps.executeUpdate();
+          
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }  
+    }
+    public void actualizaDni(String dni, String dniNuevo){
+        String update ="UPDATE empleados SET DNI = ? WHERE DNI = ?";
+        try (Connection conn = ConexionBD.getConnection();
+        Statement st = conn.createStatement();
+        PreparedStatement ps = conn.prepareStatement(update)) {
+
+        ps.setString(1, dniNuevo);
+        ps.setString(2, dni);
+         
+        ps.executeUpdate();
+          
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }  
+    }
+    public void actualizaSexo(String dni, String sexo){
+        String update ="UPDATE empleados SET SEXO = ? WHERE DNI = ?";
+        try (Connection conn = ConexionBD.getConnection();
+        Statement st = conn.createStatement();
+        PreparedStatement ps = conn.prepareStatement(update)) {
+
+        ps.setString(1, sexo);
+        ps.setString(2, dni);
+         
+        ps.executeUpdate();
+          
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }  
+    }
+    public void actualizaCategoria(String dni, int categoria){
+        String update ="UPDATE empleados SET categoria = ? WHERE DNI = ?";
+        try (Connection conn = ConexionBD.getConnection();
+        Statement st = conn.createStatement();
+        PreparedStatement ps = conn.prepareStatement(update)) {
+
+        ps.setInt(1, categoria);
+        ps.setString(2, dni);
+         
+        ps.executeUpdate();
+          
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        
+    }
+    public void actualizaAnyos(String dni, int anyos){
+        String update ="UPDATE empleados SET años = ? WHERE DNI = ?";
+        try (Connection conn = ConexionBD.getConnection();
+        Statement st = conn.createStatement();
+        PreparedStatement ps = conn.prepareStatement(update)) {
+
+        ps.setInt(1, anyos);
+        ps.setString(2, dni);
+         
+        ps.executeUpdate();
+          
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }  
     }
 }
